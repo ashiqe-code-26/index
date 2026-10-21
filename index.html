@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biryani & Mandi | Kozhikode</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700;1,800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --dark: #062c20;
+  --green: #174c37;
+  --gold: #e9ad35;
+  --cream: #fff7e9;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  background: var(--cream);
+  color: #30362e;
+  line-height: 1.6;
+}
+
+nav {
+  background: var(--dark);
+  color: white;
+  padding: 18px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 14px;
+  font-size: 14px;
+}
+
+.hero {
+  background:
+    radial-gradient(ellipse at top right, #386b45, transparent 55%),
+    linear-gradient(135deg, #06251b, #24513a);
+  color: white;
+  text-align: center;
+  padding: 75px 20px;
+}
+
+.eyebrow {
+  color: var(--gold);
+  letter-spacing: 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(38px, 7vw, 66px);
+  line-height: 1.2;
+  margin: 18px 0;
+}
+
+.hero h1 span { color: #f5c65c; }
+
+.hero p {
+  max-width: 600px;
+  margin: 0 auto 25px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 13px 23px;
+  border: none;
+  border-radius: 30px;
+  background: #f5c65c;
+  color: #062c20;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+section { padding: 55px 7%; }
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.section-heading h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(27px, 4vw, 36px);
+  color: var(--dark);
+}
+
+.section-heading p {
+  color: #777b70;
+  margin-top: 6px;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 950px;
+  margin: auto;
+}
+
+.menu-card {
+  background: white;
+  border: 1px solid #f0dfbf;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 6px 20px #18251c10;
+}
+
+.food-image {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 11px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.food-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(23px, 4vw, 31px);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.3;
+  background: linear-gradient(120deg, #b8781e, #f4c653, #d89122);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: #d89122;
+  -webkit-text-fill-color: transparent;
+}
+
+.food-malayalam {
+  color: #68472b;
+  font-size: 14px;
+  margin: 5px 0 10px;
+}
+
+.price {
+  font-weight: 700;
+  color: #68421b;
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.order-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-top: 1px solid #eee5d7;
+  padding-top: 14px;
+  margin-top: 8px;
+}
+
+.select-label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  text-align: left;
+  font-size: 12px;
+  color: #555;
+}
+
+.select-label select {
+  max-width: 100%;
+  padding: 9px;
+  border: 1px solid #d8c7a8;
+  border-radius: 8px;
+  background: #fffaf0;
+  font: inherit;
+  font-size: 14px;
+}
+
+.quantity-select:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.about {
+  background: #f0eadc;
+  text-align: center;
+}
+
+.about p {
+  max-width: 650px;
+  margin: 12px auto;
+  color: #555b51;
+}
+
+.cart {
+  max-width: 950px;
+  margin: 30px auto 0;
+  background: white;
+  border: 1px solid #e9d7b8;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.cart h3 {
+  color: var(--dark);
+  margin-bottom: 10px;
+}
+
+.total {
+  color: #79501d;
+  font-size: 27px;
+  font-weight: 700;
+  margin: 12px 0 18px;
+}
+
+#order-summary {
+  white-space: pre-line;
+  text-align: left;
+  background: #fff8ed;
+  border-radius: 10px;
+  padding: 14px;
+  margin: 12px 0;
+  overflow-wrap: anywhere;
+}
+
+.message {
+  color: #a13d25;
+  font-size: 14px;
+  margin-top: 12px;
+}
+
+.contact-box {
+  max-width: 650px;
+  margin: auto;
+  text-align: center;
+  background: white;
+  border-radius: 15px;
+  padding: 28px 20px;
+  border: 1px solid #eee5d7;
+}
+
+footer {
+  background: var(--dark);
+  color: #e7e9e2;
+  padding: 25px 15px;
+  text-align: center;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  nav { justify-content: center; }
+  nav a { margin: 0 6px; }
+  section { padding: 42px 16px; }
+  .menu-grid { grid-template-columns: 1fr; }
+  .food-image { height: 220px; }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">🍽️ HOTEL NAME</div>
+  <div>
+    <a href="#home">Home</a>
+    <a href="#menu">Menu</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero" id="home">
+  <div class="eyebrow">KOZHIKODE • KERALA</div>
+  <h1>Good Food.<br><span>Great Memories.</span></h1>
+  <p>ബിരിയാണിയുടെയും മന്തിയുടെയും രുചികൾക്കായി സ്വാഗതം!</p>
+  <a class="btn" href="#menu">Select Food / ഭക്ഷണം തിരഞ്ഞെടുക്കുക</a>
+</header>
+
+<section id="menu">
+  <div class="section-heading">
+    <h2>Our Menu | ഞങ്ങളുടെ മെനു</h2>
+    <p>Choose your food and select the quantity.</p>
+  </div>
+
+  <!-- എല്ലാ ഭക്ഷണങ്ങളും ഇവിടെ സ്വയം കാണിക്കും -->
+  <div class="menu-grid" id="menu-grid"></div>
+
+  <div class="cart">
+    <h3>🛒 Your Order | നിങ്ങളുടെ ഓർഡർ</h3>
+    <p id="selection-count">0 food items selected</p>
+    <div id="order-summary">മുകളിൽ നിന്ന് ഭക്ഷണം തിരഞ്ഞെടുക്കുക.</div>
+    <p>Total Amount | ആകെ തുക</p>
+    <div class="total" id="total">₹0</div>
+
+    <button class="btn" id="order-btn" type="button">
+      Order on WhatsApp 📲
+    </button>
+    <p class="message" id="order-message" aria-live="polite"></p>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="section-heading">
+    <h2>About Us | ഞങ്ങളെക്കുറിച്ച്</h2>
+  </div>
+  <p>Welcome to our Biryani & Mandi restaurant in Kozhikode.</p>
+  <p>നിങ്ങളുടെ ഇഷ്ടഭക്ഷണം തിരഞ്ഞെടുത്ത് WhatsApp വഴി ഓർഡർ ചെയ്യൂ.</p>
+</section>
+
+<section id="contact">
+  <div class="section-heading">
+    <h2>Contact Us | ബന്ധപ്പെടുക</h2>
+  </div>
+  <div class="contact-box">
+    <h3>📍 Kozhikode, Kerala</h3>
+    <p>📞 WhatsApp: 7025914066</p>
+  </div>
+</section>
+
+<footer>
+  <p>© <span id="year"></span> HOTEL NAME</p>
+</footer>
+
+<script>
+// ഹോട്ടലിന്റെ WhatsApp നമ്പർ
+const HOTEL_WHATSAPP = "917025914066";
+
+// price: null എന്നത് വില ഇതുവരെ നൽകിയിട്ടില്ല എന്നാണ്.
+// പഴയ നാല് വിഭവങ്ങളുടെ വില നിലനിർത്തിയിട്ടുണ്ട്.
+const menu = [
+  {
+    id: "chicken-biryani",
+    name: "Chicken Biryani",
+    malayalam: "ചിക്കൻ ബിരിയാണി",
+    price: 150,
+    image: "biryani.jpg",
+    unit: "plate"
+  },
+  {
+    id: "beef-biryani",
+    name: "Beef Biryani",
+    malayalam: "ബീഫ് ബിരിയാണി",
+    price: 180,
+    image: "beef-biryani.jpg.jpeg",
+    unit: "plate"
+  },
+  {
+    id: "chicken-mandi",
+    name: "Chicken Mandi",
+    malayalam: "ചിക്കൻ മന്തി",
+    price: 200,
+    image: "mandi.jpg",
+    unit: "plate"
+  },
+  {
+    id: "beef-mandi",
+    name: "Beef Mandi",
+    malayalam: "ബീഫ് മന്തി",
+    price: 250,
+    image: "beef-mandi.jpg.jpeg",
+    unit: "plate"
+  },
+  {
+    id: "peri-peri-mandi",
+    name: "Peri Peri Mandi",
+    malayalam: "പെരി പെരി മന്തി",
+    price: 200,
+    image: "peri-peri-mandi.jpeg",
+    unit: "plate"
+  },
+  {
+    id: "honey-chilli-mandi",
+    name: "Honey Chilli Mandi",
+    malayalam: "ഹണി ചില്ലി മന്തി",
+    price: 220,
+    image: "honey-chilli-mandi.jpg.jpeg",
+    unit: "plate"
+  },
+  {
+    id: "alfaham-mandi",
+    name: "Alfaham Mandi",
+    malayalam: "അൽഫാം മന്തി",
+    price: 190,
+    image: "alfaham-mandi.jpg.jpeg",
+    unit: "plate"
+  },
+  {
+    id: "fried-rice",
+    name: "Chicken Fried Rice",
+    malayalam: "ഫ്രൈഡ് റൈസ്",
+    price: 230,
+    image: "fried-rice.jpg.jpeg",
+    unit: "plate"
+  },
+  {
+    id: "mint-lime",
+    name: "Mint Lime",
+    malayalam: "മിന്റ് ലൈം",
+    price: 30,
+    image: "mint-lime.jpg.jpeg",
+    unit: "glass"
+  },
+  {
+    id: "mojito",
+    name: "Mojito",
+    malayalam: "മൊജിറ്റോ",
+    price: 120,
+    image: "mojito.jpg.jpeg",
+    unit: "glass"
+  }
+];
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+// മെനു കാർഡുകൾ ഉണ്ടാക്കുന്നു
+const menuGrid = document.getElementById("menu-grid");
+
+menu.forEach(item => {
+  const card = document.createElement("article");
+  card.className = "menu-card";
+
+  const priceText = item.price === null
+    ? "Price to be updated"
+    : "₹" + item.price + " / " + item.unit;
+
+  card.innerHTML = `
+    <img
+      src="${item.image}"
+      alt="${item.name}"
+      class="food-image"
+      loading="lazy"
+    >
+    <h3 class="food-title">${item.name}</h3>
+    <p class="food-malayalam">${item.malayalam}</p>
+    <div class="price">${priceText}</div>
+
+    <div class="order-controls">
+      <label class="select-label">
+        Food / ഭക്ഷണം
+        <select class="food-select" data-id="${item.id}">
+          <option value="no">Not selected</option>
+          <option value="yes">Select food</option>
+        </select>
+      </label>
+
+      <label class="select-label">
+        Quantity / എണ്ണം
+        <select class="quantity-select"
+                data-id="${item.id}" disabled>
+          ${Array.from({length: 10}, (_, i) =>
+            `<option value="${i + 1}">
+              ${i + 1} ${item.unit}${i === 0 ? "" : "s"}
+            </option>`
+          ).join("")}
+        </select>
+      </label>
+    </div>
+  `;
+
+  menuGrid.appendChild(card);
+});
+
+function getOrder() {
+  const items = [];
+
+  document.querySelectorAll(".food-select").forEach(select => {
+    if (select.value !== "yes") return;
+
+    const id = select.dataset.id;
+    const item = menu.find(food => food.id === id);
+    const quantitySelect = document.querySelector(
+      '.quantity-select[data-id="' + id + '"]'
+    );
+
+    const quantity = Number(quantitySelect.value);
+
+    items.push({
+      ...item,
+      quantity,
+      subtotal: item.price === null
+        ? null
+        : quantity * item.price
+    });
+  });
+
+  return items;
+}
+
+function updateOrder() {
+  const items = getOrder();
+  const summary = document.getElementById("order-summary");
+  const totalElement = document.getElementById("total");
+
+  let total = 0;
+  let hasUnknownPrice = false;
+
+  if (items.length === 0) {
+    summary.textContent = "മുകളിൽ നിന്ന് ഭക്ഷണം തിരഞ്ഞെടുക്കുക.";
+  } else {
+    summary.textContent = items.map(item => {
+      if (item.price === null) {
+        hasUnknownPrice = true;
+        return item.name + " × " + item.quantity +
+          " = വില അറിയാനുണ്ട്";
+      }
+
+      total += item.subtotal;
+
+      return item.name + " × " + item.quantity +
+        " = ₹" + item.subtotal;
+    }).join("\n");
+  }
+
+  totalElement.textContent = hasUnknownPrice
+    ? "വില സ്ഥിരീകരിക്കണം"
+    : "₹" + total;
+
+  document.getElementById("selection-count").textContent =
+    items.length + " food item(s) selected";
+
+  document.getElementById("order-message").textContent = "";
+}
+
+document.querySelectorAll(".food-select").forEach(select => {
+  select.addEventListener("change", function() {
+    const quantitySelect = document.querySelector(
+      '.quantity-select[data-id="' + this.dataset.id + '"]'
+    );
+
+    quantitySelect.disabled = this.value !== "yes";
+    updateOrder();
+  });
+});
+
+document.querySelectorAll(".quantity-select").forEach(select => {
+  select.addEventListener("change", updateOrder);
+});
+
+document.getElementById("order-btn").addEventListener("click", function() {
+  const items = getOrder();
+  const messageElement = document.getElementById("order-message");
+
+  if (items.length === 0) {
+    messageElement.textContent =
+      "ദയവായി ആദ്യം ഭക്ഷണം തിരഞ്ഞെടുക്കുക.";
+    return;
+  }
+
+  const unknownItems = items.filter(item => item.price === null);
+
+  if (unknownItems.length > 0) {
+    messageElement.textContent =
+      "തിരഞ്ഞെടുത്ത ചില വിഭവങ്ങളുടെ വില ലഭ്യമല്ല. " +
+      "വില അപ്ഡേറ്റ് ചെയ്ത ശേഷം ഓർഡർ ചെയ്യാം.";
+    return;
+  }
+
+  const total = items.reduce(
+    (sum, item) => sum + item.subtotal, 0
+  );
+
+  const lines = items.map(item =>
+    item.name + " x " + item.quantity +
+    " = Rs. " + item.subtotal
+  );
+
+  const message =
+    "Hello! I would like to place an order:\n\n" +
+    lines.join("\n") +
+    "\n\nTotal: Rs. " + total +
+    "\n\nPlease confirm my order. Thank you!";
+
+  const url = "https://api.whatsapp.com/send?phone=" +
+    HOTEL_WHATSAPP + "&text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
+});
+
+updateOrder();
+</script>
+
+</body>
+</html>
