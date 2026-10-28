@@ -267,7 +267,29 @@ footer {
   text-align: center;
   font-size: 13px;
 }
+.table-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 650px;
+  margin: 25px auto;
+}
 
+.table-btn {
+  padding: 14px 5px;
+  border: 2px solid #174c37;
+  border-radius: 10px;
+  background: white;
+  color: #062c20;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.table-btn.selected {
+  background: #174c37;
+  color: white;
+  border-color: #e9ad35;
+}
 @media (max-width: 600px) {
   nav { justify-content: center; }
   nav a { margin: 0 6px; }
@@ -309,6 +331,17 @@ footer {
     <h3>🛒 Your Order | നിങ്ങളുടെ ഓർഡർ</h3>
     <p id="selection-count">0 food items selected</p>
     <div id="order-summary">മുകളിൽ നിന്ന് ഭക്ഷണം തിരഞ്ഞെടുക്കുക.</div>
+    <section id="table-booking">
+  <div class="section-heading">
+    <h2>Select Your Table | ടേബിൾ തിരഞ്ഞെടുക്കുക</h2>
+    <p>ആകെ 15 ടേബിളുകൾ ലഭ്യമാണ്</p>
+  </div>
+  <div class="table-grid" id="table-grid"></div>
+  <p id="selected-table" style="text-align:center;">
+    ഇതുവരെ ടേബിൾ തിരഞ്ഞെടുത്തിട്ടില്ല
+  </p>
+  <p id="table-message" style="text-align:center;color:#a13d25;"></p>
+</section>
     <p>Total Amount | ആകെ തുക</p>
     <div class="total" id="total">₹0</div>
 
@@ -347,6 +380,33 @@ const HOTEL_WHATSAPP = "917025914066";
 
 // price: null എന്നത് വില ഇതുവരെ നൽകിയിട്ടില്ല എന്നാണ്.
 // പഴയ നാല് വിഭവങ്ങളുടെ വില നിലനിർത്തിയിട്ടുണ്ട്.
+let selectedTable = null;
+
+const tableGrid = document.getElementById("table-grid");
+
+for (let i = 1; i <= 15; i++) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "table-btn";
+  button.textContent = "Table " + i;
+
+  button.addEventListener("click", function () {
+    selectedTable = i;
+
+    document.querySelectorAll(".table-btn").forEach(btn => {
+      btn.classList.remove("selected");
+    });
+
+    button.classList.add("selected");
+
+    document.getElementById("selected-table").textContent =
+      "Selected Table: " + i;
+
+    document.getElementById("table-message").textContent = "";
+  });
+
+  tableGrid.appendChild(button);
+}
 const menu = [
   {
     id: "chicken-biryani",
@@ -560,7 +620,16 @@ document.querySelectorAll(".quantity-select").forEach(select => {
 document.getElementById("order-btn").addEventListener("click", function() {
   const items = getOrder();
   const messageElement = document.getElementById("order-message");
+if (selectedTable === null) {
+  document.getElementById("table-message").textContent =
+    "ദയവായി ആദ്യം ഒരു ടേബിൾ തിരഞ്ഞെടുക്കുക.";
 
+  document.getElementById("table-booking").scrollIntoView({
+    behavior: "smooth"
+  });
+
+  return;
+}
   if (items.length === 0) {
     messageElement.textContent =
       "ദയവായി ആദ്യം ഭക്ഷണം തിരഞ്ഞെടുക്കുക.";
@@ -586,10 +655,11 @@ document.getElementById("order-btn").addEventListener("click", function() {
   );
 
   const message =
-    "Hello! I would like to place an order:\n\n" +
-    lines.join("\n") +
-    "\n\nTotal: Rs. " + total +
-    "\n\nPlease confirm my order. Thank you!";
+  "Hello! I would like to place an order:\n\n" +
+  "Table Number: " + selectedTable + "\n\n" +
+  lines.join("\n") +
+  "\n\nTotal: Rs. " + total +
+  "\n\nPlease confirm my order. Thank you!";
 
   const url = "https://api.whatsapp.com/send?phone=" +
     HOTEL_WHATSAPP + "&text=" + encodeURIComponent(message);
